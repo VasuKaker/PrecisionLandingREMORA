@@ -1,0 +1,40 @@
+name: Restore reviewed ROS source
+on:
+  push:
+    branches: [main]
+    paths: ['SHA256SUMS']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify and restore reviewed public files
+        run: |
+          sha256sum --check SHA256SUMS
+          python3 - <<'PY'
+          import hashlib, json, tarfile
+          from pathlib import Path
+          with tarfile.open('precision-landing-source.tar.gz') as tar:
+              manifest = json.load(tar.extractfile('SOURCE_MANIFEST.json'))
+              allowed = {item['path']: item['sha256'] for item in manifest['files']}
+              assert set(tar.getnames()) == set(allowed) | {'SOURCE_MANIFEST.json'}
+              for member in tar.getmembers():
+                  assert member.isfile() and not Path(member.name).is_absolute()
+                  assert '..' not in Path(member.name).parts
+                  if member.name in allowed:
+                      assert hashlib.sha256(tar.extractfile(member).read()).hexdigest() == allowed[member.name]
+              tar.extractall('.', filter='data')
+          assert Path('ros2/src/drone_landing_service/drone_landing_service/lightweight_landing_detector.py').is_file()
+          print(f'Restored {len(allowed) + 1} reviewed ROS/vision files')
+          PY
+      - name: Commit public ROS source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f ros2 README.md .gitignore requirements-vision.txt SOURCE_MANIFEST.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Publish reviewed ROS visual precision-landing source"
+          git push origin HEAD:main
