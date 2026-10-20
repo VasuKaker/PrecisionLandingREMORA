@@ -1,0 +1,149 @@
+# Public example: set boat_latitude/boat_longitude for your own target.
+# Simulation: Gazebo/camera publishes /landing/image_raw directly to the detector.
+# Boat + drone global position both use /landing/drone_position_global in this stack.
+
+drone_global_position_interpreter:
+  ros__parameters:
+    ### Subscriptions
+    altitude_topic: /mavros/global_position/rel_alt ### /mavros/altitude is FUCKED. Says -28 at ground level.
+    drone_gps_topic: /mavros/global_position/global
+    ### Publications
+    drone_gps_setpoint_topic: /mavros/setpoint_raw/global
+    drone_global_position_topic: /landing/drone_position_global
+
+global_boat_position_interpreter:
+  ros__parameters:
+    ### Publications
+    boat_position_global_topic: /landing/boat_position_global
+    boat_orientation_topic: /landing/boat_orientation_deg
+
+    ### Parameters
+    boat_latitude: 0.0
+    boat_longitude: 0.0
+    boat_altitude: 0.0
+    boat_orientation_deg: 0.0
+    boat_global_position_API: null
+
+camera_image_interpreter:
+  ros__parameters:
+    ### Subscriptions
+    image_topic: /landing/image_raw
+    ### Publications
+    video_feed_topic: /landing/image_raw
+
+target_detector:
+  ros__parameters:
+    ### Subscriptions
+    video_feed_topic: /landing/image_raw
+    ### Publications
+    pixel_target_topic: /landing/target_pixel
+    target_detected_topic: /landing/target_detected
+    ### ArUco
+    aruco_dictionary: DICT_APRILTAG_16H5
+    grid_tag_ids: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    center_tag_id: 5
+    process_rate_hz: 8.0
+    detection_hold_s: 0.75
+    binary_white_threshold: 195
+    highlight_suppression_enabled: true
+    highlight_suppression_knee: 190
+    highlight_suppression_compression: 0.20
+    highlight_suppression_max_value: 230
+    square_binary_threshold: 142
+    square_detection_enabled: true
+    square_template_enabled: true
+    square_fallback_stale_s: 2.0
+    square_fallback_prior_timeout_s: 8.0
+    square_fallback_eval_period_s: 0.50
+    square_fallback_max_range_jump_m: 1.0
+    square_fallback_max_xy_jump_m: 0.75
+    square_template_outer_board_size_inches: 18.0
+    square_min_area_frac: 0.02
+    square_max_area_frac: 0.95
+    square_aspect_tolerance: 0.35
+    square_min_tag_area_ratio: 5.0
+    target_size_inches: 18.0
+    outer_white_inches: 0.5
+    black_border_inches: 0.75
+    inner_padding_inches: 0.35
+    tag_gap_inches: 0.35
+    prefer_tag_homography: true
+    ### Camera
+    camera_width: 640
+    camera_height: 480
+    camera_focal_px: 768.39
+
+square_detector_experimental:
+  ros__parameters:
+    video_feed_topic: /landing/image_raw
+    camera_width: 640
+    camera_height: 480
+    camera_focal_px: 768.39
+    process_rate_hz: 8.0
+    gray_threshold: 142
+    max_black_saturation: 130
+    black_square_size_inches: 17.0
+    outer_board_size_inches: 18.0
+    publish_annotated_image: true
+
+control_arbiter:
+  ros__parameters:
+    teleop_cmd_topic: /landing/cmd/teleop
+    auto_cmd_topic: /landing/cmd/auto
+    mavros_cmd_topic: /mavros/setpoint_velocity/cmd_vel
+    selected_cmd_topic: /landing/drone_velocity_setpoint
+    owner_set_topic: /landing/control_owner/set
+    owner_topic: /landing/control_owner
+    default_owner: teleop
+    publish_rate_hz: 20.0
+    enable_mode_switching: true
+    offboard_mode: OFFBOARD
+    position_mode: POSCTL
+    command_timeout_s: 0.35
+    idle_position_delay_s: 0.5
+    mode_request_interval_s: 1.0
+    active_command_epsilon: 0.001
+    offboard_warmup_setpoints: 20
+
+precision_landing_controller:
+  ros__parameters:
+    ### Subscriptions
+    target_metric_topic: /landing/target_metric
+    target_range_topic: /landing/target_range_m
+    metric_error_topic: /landing/metric_error
+    target_detected_topic: /landing/target_detected
+    drone_global_position_topic: /landing/drone_position_global
+    boat_position_global_topic: /landing/boat_position_global
+    ### Publications
+    drone_speed_setpoint_topic: /landing/cmd/auto
+    drone_speed_topic: /landing/auto_velocity_setpoint
+    drone_gps_setpoint_topic: /mavros/setpoint_raw/global
+    ### Parameters
+    kp: 0.90
+    metric_vx_sign: 1.0
+    metric_vy_sign: 1.0
+    velocity_mav_frame: BODY_NED
+    gps_nav_altitude_m: 5.0
+    gps_nav_horizontal_setpoint_speed_mps: 1.0
+    gps_nav_vertical_setpoint_speed_mps: 0.75
+    gps_nav_arrival_radius_m: 0.5
+    gps_nav_altitude_tolerance_m: 0.75
+    gps_spiral_enabled: true
+    gps_spiral_start_radius_m: 0.4
+    gps_spiral_max_radius_m: 10.0
+    gps_spiral_radial_speed_mps: 0.25
+    gps_spiral_tangential_speed_mps: 1.50
+    min_horizontal_speed: 0.0
+    max_horizontal_speed: 0.12
+    max_vertical_speed: 0.30
+    descent_speed: 0.1
+    align_metric_tolerance_m: 0.025
+    align_entry_metric_threshold_m: 3.0
+    align_stable_s: 1.0
+    entry_grace_s: 0.8
+    target_metric_timeout_s: 1.00
+    align_missed_sample_limit: 15
+    descend_missed_sample_limit: 15
+    touchdown_range_m: 0.60
+    touchdown_xy_tolerance_m: 0.12
+    start_on_launch: false

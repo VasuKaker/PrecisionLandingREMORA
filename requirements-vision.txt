@@ -1,0 +1,4 @@
+numpy==1.26.4
+pytest
+# OpenCV with cv2.aruco is provided by the ROS runtime (captured version: 4.6.0).
+# Real-image detection additionally needs an apriltag extension with tagLandmark36h11.

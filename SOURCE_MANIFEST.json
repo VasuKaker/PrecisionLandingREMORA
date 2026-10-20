@@ -1,0 +1,106 @@
+{
+  "snapshot_date": "2026-10-20",
+  "scope": "ROS vision, planar pose estimation and companion landing controllers",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "226e78fa16c7732b6d0563f32a0fb256f401cd99fc757dbd1f85db10b0c14f6f"
+    },
+    {
+      "path": "README.md",
+      "sha256": "5a9a6b3994f1f88626155a64123b470c71a5b84d7353c04081062909776386fb"
+    },
+    {
+      "path": "requirements-vision.txt",
+      "sha256": "d287b353389b3f74e79d4358a79beac330f465c047eed4fa0f73e31512a9d87a"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/config/landing_real.yaml",
+      "sha256": "020f5b5a543cd38e3348a4807e00c7ecf9171dc5d0ee57ff4a826e38f74224d6"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/config/landing_sim.yaml",
+      "sha256": "10e51e347f22090679bf65665234988f0110d49823c2c4b62931e8da42c5738b"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/__init__.py",
+      "sha256": "0a34f6643669b8f688cbc7f4923e80f231992e3a0b861aee9a55aa2e212692fc"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/camera_image_interpreter.py",
+      "sha256": "94af8da4066e97c24e332402aeb4175007de1014d9849723922f95564a0343ec"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/control_arbiter.py",
+      "sha256": "84ce5366550a0aed21df2c3e32d524d15b403e3978e1a98f53f44a89ce76bbce"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/drone_global_position_interpreter.py",
+      "sha256": "459da8e303cf5ced9053a3395089a39420e14d5a9e656a728ec31d29dd549a1d"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/global_boat_position_interpreter.py",
+      "sha256": "750181462ec5c73e8ebfe4280626f7f9cd934cc48bd6688b148a43f381c812f9"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/landmark_tag_detector.py",
+      "sha256": "131afb890e59c2c1814669ddd51d532ac9e5f79c9a9fe836a227ea2f5737d765"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/lightweight_landing_detector.py",
+      "sha256": "25be05e41d63946df796472d78ecaab15268391c30c5bbbdf13d4d4fef438992"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/precision_landing_controller.py",
+      "sha256": "7acaa6508c3fb17a725f42967778180565843c1571d46125f8ff96029b671ad0"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/precision_landing_controller_gps_nav.py",
+      "sha256": "353b60df922a270363c3e9ecab40c1b51295f0795c4ae26e0461080fa18785e4"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/precision_landing_controller_manual_search.py",
+      "sha256": "19d430e87cfcf8024a62840e96abbedb82e2791be6c9684d3ac88c2b7ad1cac3"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/square_detector_experimental.py",
+      "sha256": "6edc38b8edd3fcf5aee4abb73ec109bafcc81530b5cc1133a64a89bdfb4ca2f7"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/target_detector.py",
+      "sha256": "1ded4599d3f0824acdfc3ed43c7864d3b4fe314ab3c5b2da8ad5f7a563a71e08"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/drone_landing_service/target_detector_deprecated.py",
+      "sha256": "e43fbaef727f707dacaa9a6d2224f32d57d2c559f72488cfe4f75d34480a6a28"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/launch/precision_landing.launch.py",
+      "sha256": "a30e2415d444162cbf56e703a6d7657037250b17326e8bf9164f7d3d71f60d64"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/legacy_tests/target_detector_snapshot.py",
+      "sha256": "52da452f517b19d378d5f5d29490dea380845e7850e61709504914361a497405"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/package.xml",
+      "sha256": "9d48e48c41ae05afb78224510579c0b9b0104220d599c09f509cf51e74617217"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/resource/drone_landing_service",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/setup.cfg",
+      "sha256": "bf4bc972b98d92394d821031f34f68e75616171f576c08d83b9c29899491c30a"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/setup.py",
+      "sha256": "f71240ab30fd9364107a0453592bcbfd2b76dafa050a107d62deba14b22c7f45"
+    },
+    {
+      "path": "ros2/src/drone_landing_service/test/test_recursive_landmark_geometry.py",
+      "sha256": "e1bff2553eeda42b6577ca39ef94feb9a566139e2c414c869ccf93da1628dbc6"
+    }
+  ]
+}
